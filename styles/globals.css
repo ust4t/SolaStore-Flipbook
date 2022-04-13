@@ -9,8 +9,17 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+  transition: all 250ms ease-in-out;
 }
 
 * {
   box-sizing: border-box;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+a:hover {
+  color: var(--color-primary);
 }

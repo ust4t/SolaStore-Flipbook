@@ -1,0 +1,29 @@
+:root {
+  --color-primary: #ff5400;
+  --color-primary-dark: #c94300;
+  --color-secondary: #ffc107;
+  --color-dark: #212121;
+  --color-light: #ccc;
+  --color-lighter: #f5f5f5;
+  --color-danger: #e91d0f;
+  --color-success: #4caf50;
+  --color-warning: #ff9800;
+  --color-info: #2196f3;
+  --color-1: #eaeaea;
+  --color-2: #2dedbd;
+  --color-3: #494949;
+  --wheel-font: "Lato", "Quicksand", sans-serif;
+  --wheel-size: 330px;
+  --wheel-text-size: 1.25rem;
+  --wheel-slice-spacing: 0px;
+  --wheel-border-size: 5px;
+  --wheel-color: #29181d;
+  --neutral-color: white;
+  --PI: 3.14159265358979;
+  --nb-item: 0;
+  --item-nb: 0;
+  --selected-item: 0;
+  --nb-turn: 5;
+  --spinning-duration: 4s;
+  --reset-duration: 0.25s;
+}
