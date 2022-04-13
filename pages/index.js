@@ -43,130 +43,147 @@ export default function Home({ allPages, brands }) {
     setPage(e.data);
   };
 
+  const firstPage = () => flipBook.current.pageFlip().flip(0, ["top"]);
+
+  const lastPage = () => {
+    const totalPage = flipBook.current.pageFlip().getPageCount();
+    flipBook.current.pageFlip().flip(totalPage - 1, ["top"]);
+  };
+
   useEffect(() => {
     setScreeHt(window.innerHeight);
   }, []);
 
   return (
-    <div
-      style={{
-        maxWidth: "1300px",
-        height: "100vh",
-      }}
-      className="d-flex flex-column align-items-center justify-content-center overflow-hidden">
-      <HTMLFlipBook
-        width={550}
-        height={733}
-        minWidth={315}
-        maxWidth={1200}
-        minHeight={420}
-        size="stretch"
-        maxShadowOpacity={0.5}
-        showCover={true}
-        mobileScrollSupport={true}
-        onFlip={onPage}
-        // onChangeOrientation={this.onChangeOrientation}
-        // onChangeState={this.onChangeState}
-        className="demo-book "
-        ref={flipBook}>
-        <div
-          className="page page-cover d-flex flex-column align-items-center pt-2 "
-          data-density="hard">
-          <img className="logo" src="/img/placeholder.jpg" alt="" />
-          <div className="d-flex flex-column justify-content-start w-100 px-5 ">
-            {pages.map(({ title, pageNumber }) => (
-              <a
-                key={`${pageNumber}.||`}
-                onClick={() => pageFlip(pageNumber + 2, ["top", "bottom"])}
-                className="d-flex justify-content-between mb-2 cursor-pointer">
-                <p className="align-self-start h5 fw-normal">{title}</p>
-                <p className="align-self-start h5 fw-normal">{pageNumber}</p>
-              </a>
-            ))}
-            <div className="row">
-              {brands.slice(0, 8).map((brandItem, i) => (
-                <div
-                  key={`${i}._!`}
-                  className="col-3 my-1 cursor-pointer brand">
+    <>
+      <div
+        style={{
+          maxWidth: "1300px",
+          height: "100vh",
+        }}
+        className="d-flex flex-column align-items-center justify-content-center overflow-hidden">
+        <HTMLFlipBook
+          width={550}
+          height={733}
+          minWidth={315}
+          maxWidth={1200}
+          minHeight={420}
+          size="stretch"
+          maxShadowOpacity={0.5}
+          showCover={true}
+          mobileScrollSupport={true}
+          onFlip={onPage}
+          // onChangeOrientation={this.onChangeOrientation}
+          // onChangeState={this.onChangeState}
+          className="demo-book "
+          ref={flipBook}>
+          <div
+            className="page page-cover d-flex flex-column align-items-center pt-2 "
+            data-density="hard">
+            <img className="logo" src="/img/placeholder.jpg" alt="" />
+            <div className="d-flex flex-column justify-content-start w-100 px-5 ">
+              {pages.map(({ title, pageNumber }) => (
+                <a
+                  key={`${pageNumber}.||`}
+                  onClick={() => pageFlip(pageNumber, ["top", "bottom"])}
+                  className="d-flex justify-content-between mb-2 cursor-pointer">
+                  <p className="align-self-start h5 fw-normal">{title}</p>
+                  <p className="align-self-start h5 fw-normal">{pageNumber}</p>
+                </a>
+              ))}
+              <div className="row">
+                {brands.slice(0, 8).map((brandItem, i) => (
+                  <div
+                    key={`${i}._!`}
+                    className="col-3 my-1 cursor-pointer brand">
+                    <img
+                      className="border brand brand-img"
+                      src={`${sources.brand}${brandItem.guidName}`}
+                      alt={brandItem.brandName}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <Page className="page">
+            <div className="row justify-content-center h-100 m-2">
+              {brands.slice(8, 26).map((brandItem, i) => (
+                <div key={`${i}._._!`} className="col-3 my-1 cursor-pointer">
                   <img
-                    className="border brand brand-img"
+                    className="border brand-img-2"
                     src={`${sources.brand}${brandItem.guidName}`}
                     alt={brandItem.brandName}
                   />
                 </div>
               ))}
             </div>
+          </Page>
+
+          {allPages.map((page, index) => (
+            <Page key={`${index}.|`} className="page" number={index}>
+              <div className="row m-0 p-0">
+                <div className="col-12 border-bottom position-relative">
+                  <p className="text-center fs-3 fw-bold">{page.title}</p>
+                  <p className="text-center fs-3 position-absolute top-0  ps-2">
+                    {index + 1}
+                  </p>
+                </div>
+                {page.data.map((pageItem, i) => (
+                  <div key={`${i}.||._`} className="col-4 my-md-1">
+                    <a
+                      href={`https://solastore.com.tr/detail/${encodeURLString(
+                        pageItem.productShortName
+                      )}:${pageItem.masterProductID}?selected=${
+                        pageItem.productID
+                      }`}
+                      target="_blank">
+                      <img
+                        src={`${sources.imageMidSrc}${pageItem.picture_1}`}
+                        alt=""
+                        className="page-image img-fluid overflow-hidden"
+                      />
+                      <p className="text-center title fw-bold mb-0">
+                        {pageItem.productShortName}
+                      </p>
+                      <p
+                        style={{
+                          color: "var(--color-primary)",
+                        }}
+                        className="text-center fs-4">
+                        {pageItem.singlePrice}$
+                      </p>
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </Page>
+          ))}
+        </HTMLFlipBook>
+        <div
+          style={{
+            width: "230px",
+            height: "60px",
+            backgroundColor: "#fff",
+            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.15)",
+            gap: "10px",
+          }}
+          className="d-flex justify-content-center align-items-center position-fixed bottom-0 start-50 translate-middle-x">
+          <div onClick={firstPage} className="controls-btn">
+            <ion-icon name="play-back-outline" size="large" />
+          </div>
+          <div onClick={prevPage} className="controls-btn">
+            <ion-icon name="chevron-back-outline" size="large" />
+          </div>
+          <div onClick={nextPage} className="controls-btn">
+            <ion-icon name="chevron-forward-outline" size="large" />
+          </div>
+          <div onClick={lastPage} className="controls-btn">
+            <ion-icon name="play-forward-outline" size="large" />
           </div>
         </div>
-        <Page className="page">
-          <div className="row justify-content-center h-100 m-2">
-            {brands.slice(8, 26).map((brandItem, i) => (
-              <div key={`${i}._._!`} className="col-3 my-1 cursor-pointer">
-                <img
-                  className="border brand-img-2"
-                  src={`${sources.brand}${brandItem.guidName}`}
-                  alt={brandItem.brandName}
-                />
-              </div>
-            ))}
-          </div>
-        </Page>
-
-        {allPages.map((page, index) => (
-          <Page key={`${index}.|`} className="page" number={index}>
-            <div className="row m-0 p-0">
-              <div className="col-12 border-bottom position-relative">
-                <p className="text-center fs-3 fw-bold">{page.title}</p>
-                <p className="text-center fs-3 position-absolute top-0  ps-2">
-                  {index + 1}
-                </p>
-              </div>
-              {page.data.map((pageItem, i) => (
-                <div key={`${i}.||._`} className="col-4 my-md-1">
-                  <a
-                    href={`https://solastore.com.tr/detail/${encodeURLString(
-                      pageItem.productShortName
-                    )}:${pageItem.masterProductID}?selected=${
-                      pageItem.productID
-                    }`}
-                    target="_blank">
-                    <img
-                      src={`${sources.imageMidSrc}${pageItem.picture_1}`}
-                      alt=""
-                      className="page-image img-fluid overflow-hidden"
-                    />
-                    <p className="text-center title fw-bold mb-0">
-                      {pageItem.productShortName}
-                    </p>
-                    <p
-                      style={{
-                        color: "var(--color-primary)",
-                      }}
-                      className="text-center fs-4">
-                      {pageItem.singlePrice}$
-                    </p>
-                  </a>
-                </div>
-              ))}
-            </div>
-          </Page>
-        ))}
-      </HTMLFlipBook>
-      <div
-        style={{
-          zIndex: "102",
-        }}
-        className="d-flex">
-        <button className="btn btn-primary" onClick={prevPage}>
-          Prev
-        </button>
-        {page !== allPages.length && (
-          <button className="btn btn-primary" onClick={nextPage}>
-            Next
-          </button>
-        )}
       </div>
-    </div>
+    </>
   );
 }
 
@@ -177,7 +194,7 @@ const pages = [
   },
   {
     title: "Popüler Ürünler",
-    pageNumber: 2,
+    pageNumber: 4,
   },
 ];
 
