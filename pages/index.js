@@ -70,7 +70,6 @@ export default function Home({ allPages, brands }) {
                   }
                   key={`${i}._._!`}
                   className="col-3 my-1 cursor-pointer">
-                  {brandItem.pageNum}
                   <img
                     className="border brand-img-2"
                     src={`${sources.brand}${brandItem.guidName}`}
@@ -122,6 +121,7 @@ export default function Home({ allPages, brands }) {
           ))}
         </HTMLFlipBook>
         <Controls
+          currentPage={page}
           nextPage={nextPage}
           prevPage={prevPage}
           firstPage={firstPage}

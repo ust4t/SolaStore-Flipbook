@@ -24,7 +24,6 @@ const PageCover = React.forwardRef(({ pages, brands, pageFlip }, ref) => {
               key={`${i}._!`}
               onClick={() => pageFlip(brandItem.pageNum, ["top"])}
               className="col-3 my-1 cursor-pointer brand">
-              {brandItem.pageNum}
               <img
                 className="border brand brand-img"
                 src={`${sources.brand}${brandItem.guidName}`}

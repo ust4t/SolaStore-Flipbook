@@ -153,6 +153,7 @@
   display: -ms-grid;
   display: grid;
   place-content: center;
+  justify-items: center;
   border-radius: 5px;
   padding: 5px;
   cursor: pointer;
@@ -162,6 +163,11 @@
 
 .controls-btn:hover {
   background: #cfcfcf;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 @media screen and (max-width: 500px) {
