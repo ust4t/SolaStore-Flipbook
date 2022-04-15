@@ -5,7 +5,7 @@
 }
 
 .title {
-  font-size: 1.2rem;
+  font-size: 1.05rem;
 }
 
 .flip-book {
@@ -149,6 +149,9 @@
 }
 
 @media screen and (max-width: 500px) {
+  .book-overflow {
+    overflow: hidden !important;
+  }
   .logo {
     width: 150px;
     height: 150px;

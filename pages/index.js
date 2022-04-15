@@ -4,33 +4,14 @@ import HTMLFlipBook from "react-pageflip";
 
 import { sources } from "../sources";
 import { encodeURLString } from "../utils/utils";
-
-const PageCover = React.forwardRef((props, ref) => {
-  return (
-    <div className="page page-cover" ref={ref} data-density="hard">
-      <div className="page-content">
-        <h2>{props.children}</h2>
-      </div>
-    </div>
-  );
-});
-
-const Page = React.forwardRef((props, ref) => {
-  return (
-    <div className="page" ref={ref}>
-      <div className="page-content">
-        <div className="page-text">{props.children}</div>
-      </div>
-    </div>
-  );
-});
+import Controls from "../components/Controls";
+import PageCover from "../components/PageCover";
+import Page from "../components/Page";
 
 export default function Home({ allPages, brands }) {
   const [page, setPage] = useState(0);
-  const [totalPage, setTotalPage] = useState(0);
   const [screeHt, setScreeHt] = useState(1);
   const flipBook = useRef();
-  // const flipBook = React.useRef(null);
 
   const nextPage = () => flipBook.current.pageFlip().flipNext();
 
@@ -61,7 +42,7 @@ export default function Home({ allPages, brands }) {
           maxWidth: "1300px",
           height: "100vh",
         }}
-        className="d-flex flex-column align-items-center justify-content-center overflow-hidden">
+        className="d-flex flex-column align-items-center justify-content-center book-overflow">
         <HTMLFlipBook
           width={550}
           height={733}
@@ -74,42 +55,22 @@ export default function Home({ allPages, brands }) {
           mobileScrollSupport={true}
           onFlip={onPage}
           // onChangeOrientation={this.onChangeOrientation}
-          // onChangeState={this.onChangeState}
-          className="demo-book "
+          className="demo-book"
           ref={flipBook}>
-          <div
-            className="page page-cover d-flex flex-column align-items-center pt-2 "
-            data-density="hard">
-            <img className="logo" src="/img/placeholder.jpg" alt="" />
-            <div className="d-flex flex-column justify-content-start w-100 px-5 ">
-              {pages.map(({ title, pageNumber }) => (
-                <a
-                  key={`${pageNumber}.||`}
-                  onClick={() => pageFlip(pageNumber, ["top", "bottom"])}
-                  className="d-flex justify-content-between mb-2 cursor-pointer">
-                  <p className="align-self-start h5 fw-normal">{title}</p>
-                  <p className="align-self-start h5 fw-normal">{pageNumber}</p>
-                </a>
-              ))}
-              <div className="row">
-                {brands.slice(0, 8).map((brandItem, i) => (
-                  <div
-                    key={`${i}._!`}
-                    className="col-3 my-1 cursor-pointer brand">
-                    <img
-                      className="border brand brand-img"
-                      src={`${sources.brand}${brandItem.guidName}`}
-                      alt={brandItem.brandName}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+          <PageCover pages={pages} brands={brands} pageFlip={pageFlip} />
+
           <Page className="page">
             <div className="row justify-content-center h-100 m-2">
               {brands.slice(8, 26).map((brandItem, i) => (
-                <div key={`${i}._._!`} className="col-3 my-1 cursor-pointer">
+                <div
+                  onClick={() =>
+                    brandItem.pageNum === 30 || brandItem.pageNum === 31
+                      ? lastPage()
+                      : pageFlip(brandItem.pageNum + 3, ["top"])
+                  }
+                  key={`${i}._._!`}
+                  className="col-3 my-1 cursor-pointer">
+                  {brandItem.pageNum}
                   <img
                     className="border brand-img-2"
                     src={`${sources.brand}${brandItem.guidName}`}
@@ -124,8 +85,8 @@ export default function Home({ allPages, brands }) {
             <Page key={`${index}.|`} className="page" number={index}>
               <div className="row m-0 p-0">
                 <div className="col-12 border-bottom position-relative">
-                  <p className="text-center fs-3 fw-bold">{page.title}</p>
-                  <p className="text-center fs-3 position-absolute top-0  ps-2">
+                  <p className="text-center fs-3 fw-bold mb-1">{page.title}</p>
+                  <p className="text-center fs-3 position-absolute top-0 ps-2 mb-1">
                     {index + 1}
                   </p>
                 </div>
@@ -160,28 +121,12 @@ export default function Home({ allPages, brands }) {
             </Page>
           ))}
         </HTMLFlipBook>
-        <div
-          style={{
-            width: "230px",
-            height: "60px",
-            backgroundColor: "#fff",
-            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.15)",
-            gap: "10px",
-          }}
-          className="d-flex justify-content-center align-items-center position-fixed bottom-0 start-50 translate-middle-x">
-          <div onClick={firstPage} className="controls-btn">
-            <ion-icon name="play-back-outline" size="large" />
-          </div>
-          <div onClick={prevPage} className="controls-btn">
-            <ion-icon name="chevron-back-outline" size="large" />
-          </div>
-          <div onClick={nextPage} className="controls-btn">
-            <ion-icon name="chevron-forward-outline" size="large" />
-          </div>
-          <div onClick={lastPage} className="controls-btn">
-            <ion-icon name="play-forward-outline" size="large" />
-          </div>
-        </div>
+        <Controls
+          nextPage={nextPage}
+          prevPage={prevPage}
+          firstPage={firstPage}
+          lastPage={lastPage}
+        />
       </div>
     </>
   );
@@ -237,11 +182,27 @@ export async function getServerSideProps() {
 
     return {
       props: {
-        allPages,
-        brands,
+        allPages: [
+          ...allPages.slice(0, 5),
+          ...allPages
+            .slice(5, allPages.length)
+            .sort((a, b) => a.title.localeCompare(b.title)),
+        ],
+        brands: brands
+          .sort((a, b) => a.brandName.localeCompare(b.brandName))
+          .map((item, i) => ({
+            ...item,
+            pageNum: 5 + i + 1,
+          })),
       },
     };
   } catch (err) {
     console.log(err);
+    return {
+      props: {
+        allPages: [],
+        brands: [],
+      },
+    };
   }
 }

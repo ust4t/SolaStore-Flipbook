@@ -16,6 +16,10 @@ a {
   box-sizing: border-box;
 }
 
+div#__next {
+  overflow-x: hidden;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
