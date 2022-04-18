@@ -9,7 +9,7 @@ const PageCover = React.forwardRef(({ pages, brands, pageFlip }, ref) => {
   return (
     <div className="page page-cover pt-2" ref={ref} data-density="hard">
       <div className="w-100 d-flex align-items-center justify-content-center">
-        <img className="logo" src="/img/placeholder.jpg" alt="" />
+        <img className="logo" src="public/img/placeholder.jpg" alt="" />
       </div>
       <div className="d-flex flex-column justify-content-start w-100 px-5 ">
         {pages.map(({ title, pageNumber }) => (
