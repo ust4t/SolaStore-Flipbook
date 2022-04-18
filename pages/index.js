@@ -1,17 +1,28 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import axios from "axios";
 import HTMLFlipBook from "react-pageflip";
+import useTranslation from "next-translate/useTranslation";
 
 import { sources } from "../sources";
 import { encodeURLString } from "../utils/utils";
 import Controls from "../components/Controls";
 import PageCover from "../components/PageCover";
 import Page from "../components/Page";
+import { loadState } from "../context/browser-storage";
+import { StoreContext } from "../context/StoreProvider";
+import { CHANGE_LANG } from "../context/type";
 
 export default function Home({ allPages, brands }) {
   const [page, setPage] = useState(0);
-  const [screeHt, setScreeHt] = useState(1);
+  const { dispatch, state } = useContext(StoreContext);
+  const { t } = useTranslation("common");
   const flipBook = useRef();
+  const lang = loadState("lang", {
+    name: "ru",
+    flag: "ru",
+  });
+
+  console.log(state);
 
   const nextPage = () => flipBook.current.pageFlip().flipNext();
 
@@ -32,7 +43,10 @@ export default function Home({ allPages, brands }) {
   };
 
   useEffect(() => {
-    setScreeHt(window.innerHeight);
+    dispatch({
+      type: CHANGE_LANG,
+      payload: lang,
+    });
   }, []);
 
   return (
@@ -84,7 +98,9 @@ export default function Home({ allPages, brands }) {
             <Page key={`${index}.|`} className="page" number={index}>
               <div className="row m-0 p-0">
                 <div className="col-12 border-bottom position-relative">
-                  <p className="text-center fs-3 fw-bold mb-1">{page.title}</p>
+                  <p className="text-center fs-3 fw-bold mb-1">
+                    {index >= 0 && index <= 6 ? t(page.title) : page.title}
+                  </p>
                   <p className="text-center fs-3 position-absolute top-0 ps-2 mb-1">
                     {index + 1}
                   </p>
@@ -160,11 +176,11 @@ export async function getServerSideProps() {
       ]);
 
     allPages = [
-      { title: "Yeni Ürünler", data: newProducts.slice(0, 6) },
-      { title: "Yeni Ürünler", data: newProducts.slice(6, 12) },
-      { title: "Yeni Ürünler", data: newProducts.slice(12, 18) },
-      { title: "Popüler Ürünler", data: popularProducts.slice(0, 6) },
-      { title: "Popüler Ürünler", data: popularProducts.slice(6, 12) },
+      { title: "new", data: newProducts.slice(0, 6) },
+      { title: "new", data: newProducts.slice(6, 12) },
+      { title: "new", data: newProducts.slice(12, 18) },
+      { title: "popular", data: popularProducts.slice(0, 6) },
+      { title: "popular", data: popularProducts.slice(6, 12) },
     ];
 
     await Promise.all(
