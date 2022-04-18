@@ -1,8 +1,11 @@
 import React from "react";
+import useTranslation from "next-translate/useTranslation";
 
 import { sources } from "../../sources";
 
 const PageCover = React.forwardRef(({ pages, brands, pageFlip }, ref) => {
+  const { t } = useTranslation("common");
+
   return (
     <div className="page page-cover pt-2" ref={ref} data-density="hard">
       <div className="w-100 d-flex align-items-center justify-content-center">
@@ -14,7 +17,7 @@ const PageCover = React.forwardRef(({ pages, brands, pageFlip }, ref) => {
             key={`${pageNumber}.||`}
             onClick={() => pageFlip(pageNumber, ["top", "bottom"])}
             className="d-flex justify-content-between mb-2 cursor-pointer">
-            <p className="align-self-start h5 fw-normal">{title}</p>
+            <p className="align-self-start h5 fw-normal">{t(title)}</p>
             <p className="align-self-start h5 fw-normal">{pageNumber}</p>
           </a>
         ))}

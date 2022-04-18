@@ -134,11 +134,11 @@ export default function Home({ allPages, brands }) {
 
 const pages = [
   {
-    title: "Yeni Ürünler",
+    title: "new",
     pageNumber: 1,
   },
   {
-    title: "Popüler Ürünler",
+    title: "popular",
     pageNumber: 4,
   },
 ];
