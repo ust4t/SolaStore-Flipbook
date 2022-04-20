@@ -5,7 +5,8 @@
   background-size: cover;
 }
 
-.title {
+.title,
+.page-title {
   font-size: 1.05rem;
 }
 
@@ -36,6 +37,10 @@
   min-width: 8rem;
 }
 
+.price {
+  font-size: 1.25rem;
+}
+
 .dropdown-item {
   padding: 0.5rem 1rem;
   display: -webkit-box;
@@ -47,6 +52,10 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.page-item-wrapper {
+  max-height: var(--page-height);
 }
 
 .page {
@@ -82,7 +91,7 @@
 }
 
 .page .page-content .page-image {
-  height: 70%;
+  height: 60%;
 }
 
 .page .page-content .page-text {
@@ -193,6 +202,12 @@
   pointer-events: none;
 }
 
+@media screen and (max-width: 374px) {
+  .price {
+    font-size: 1rem;
+  }
+}
+
 @media screen and (max-width: 500px) {
   .book-overflow {
     overflow: hidden !important;
@@ -202,7 +217,7 @@
     height: 150px;
   }
   .title {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
   .brand-img-2 {
     padding: 0;
@@ -218,5 +233,26 @@
   }
   .page .page-content .page-image {
     height: 55%;
+  }
+}
+
+@media (min-width: 501px) and (max-width: 768px) {
+  .title {
+    font-size: 0.8rem;
+  }
+  .price {
+    font-size: 0.9rem;
+  }
+  .page .page-content .page-image {
+    height: 60%;
+  }
+}
+
+@media (min-width: 1367px) {
+  .page-title {
+    font-size: 1.5rem;
+  }
+  .page .page-content .page-image {
+    height: 70%;
   }
 }
