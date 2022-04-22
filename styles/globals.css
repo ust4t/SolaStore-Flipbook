@@ -30,23 +30,35 @@ a:hover {
 
 :root {
 	--page-height: 250px;
+	--brand-img: 70px;
+	--logo: 110px;
 }
 
 @media screen and (max-width: 374px) {
 	:root {
 		--page-height: 210px;
+		/* --brand-img: 50px; */
 	}
 }
 
 @media (min-width: 375px) and (max-width: 413px) {
 	:root {
 		--page-height: 250px;
+		--logo: 130px;
 	}
 }
 
 @media (min-width: 414px) and (max-width: 568px) {
 	:root {
 		--page-height: 280px;
+		--brand-img: 90px;
+		--logo: 150px;
+	}
+}
+
+@media (min-width: 569px) and (max-width: 629px) {
+	:root {
+		--brand-img: 100px;
 	}
 }
 
@@ -56,26 +68,40 @@ a:hover {
 	}
 }
 
+@media (min-width: 768px) and (max-width: 979px) {
+	:root {
+		--logo: 150px;
+	}
+}
+
 @media (min-width: 980px) and (max-width: 1024px) {
 	:root {
 		--page-height: 310px;
+		--brand-img: 110px;
+		--logo: 160px;
 	}
 }
 
 @media (min-width: 1025px) and (max-width: 1115px) {
 	:root {
 		--page-height: 340px;
+		--brand-img: 110px;
+		--logo: 170px;
 	}
 }
 
 @media (min-width: 1116px) and (max-width: 1366px) {
 	:root {
 		--page-height: 385px;
+		--brand-img: 120px;
+		--logo: 180px;
 	}
 }
 
 @media (min-width: 1367px) {
 	:root {
 		--page-height: 370px;
+		--brand-img: 120px;
+		--logo: 190px;
 	}
 }

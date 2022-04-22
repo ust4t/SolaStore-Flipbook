@@ -33,6 +33,12 @@
   border-radius: 5px;
 }
 
+.flag-mobile {
+  width: 40px;
+  height: 25px;
+  border-radius: 5px;
+}
+
 .dropdown-menu {
   min-width: 8rem;
 }
@@ -161,8 +167,8 @@
 }
 
 .logo {
-  width: 200px;
-  height: 200px;
+  width: var(--logo);
+  height: var(--logo);
   border-radius: 50%;
 }
 
@@ -171,14 +177,14 @@
 }
 
 .brand .brand-img {
-  width: 110px;
-  height: 110px;
+  width: var(--brand-img);
+  height: var(--brand-img);
 }
 
 .brand-img-2 {
   padding: 5px;
-  width: 110px;
-  height: 110px;
+  width: var(--brand-img);
+  height: var(--brand-img);
 }
 
 .controls-btn {
@@ -197,6 +203,10 @@
   background: #cfcfcf;
 }
 
+.control-mobile-title {
+  font-size: 0.9rem;
+}
+
 .disabled {
   opacity: 0.5;
   pointer-events: none;
@@ -212,24 +222,8 @@
   .book-overflow {
     overflow: hidden !important;
   }
-  .logo {
-    width: 150px;
-    height: 150px;
-  }
   .title {
     font-size: 0.85rem;
-  }
-  .brand-img-2 {
-    padding: 0;
-    width: 80px;
-    height: 80px;
-  }
-  .brand {
-    margin: 10px;
-  }
-  .brand .brand-img {
-    width: 90px;
-    height: 90px;
   }
   .page .page-content .page-image {
     height: 55%;

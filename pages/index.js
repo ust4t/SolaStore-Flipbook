@@ -116,7 +116,7 @@ export default function Home({ allPages, brands }) {
 											target="_blank">
 											<img
 												src={`${sources.imageMidSrc}${pageItem.picture_1}`}
-												alt=""
+												alt={pageItem.productShortName}
 												className="page-image img-fluid overflow-hidden"
 											/>
 											<p className="text-center title fw-bold mb-0">
